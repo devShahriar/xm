@@ -1,0 +1,7 @@
+db_config:
+  host: "127.0.0.1"
+  password: "postgres"
+  user: "postgres"
+  db_name: "b1"
+  port: "5432"
+  slow_query_threshold: 10
