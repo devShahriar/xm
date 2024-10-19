@@ -22,7 +22,7 @@ func (d *CompanyDB) RunMigrations() {
 }
 
 func (db *CompanyDB) CreateCompany(ctx context.Context, company *entity.Company) error {
-	return nil
+	return db.Db.WithContext(ctx).Create(company).Error
 }
 
 func (db *CompanyDB) UpdateCompany(ctx context.Context, company *entity.Company) error {

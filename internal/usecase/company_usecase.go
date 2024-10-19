@@ -26,3 +26,13 @@ func (uc *CompanyUsecase) GetCompanyByID(ctx context.Context, id string) (*entit
 
 	return company, nil
 }
+
+func (uc *CompanyUsecase) CreateCompany(ctx context.Context, company *entity.Company) error {
+	// Perform validations on the company data
+	if err := ValidateCompany(company); err != nil {
+		return err
+	}
+
+	// Call the repository to persist the company data
+	return uc.repo.CreateCompany(ctx, company)
+}
