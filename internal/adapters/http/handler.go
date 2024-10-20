@@ -43,22 +43,46 @@ func (s *Server) CreateCompany(c echo.Context) error {
 
 func (s *Server) UpdateCompany(c echo.Context) error {
 	id := c.Param("id")
-
-	company, err := s.companyUC.GetCompanyByID(c.Request().Context(), id)
+	companyID, err := uuid.Parse(id)
 	if err != nil {
-		return c.JSON(http.StatusNotFound, "Company not found")
+		return c.JSON(http.StatusBadRequest, "Invalid company ID")
 	}
 
-	return c.JSON(http.StatusOK, company)
+	// Bind the request body to the Company entity
+	company := new(entity.Company)
+	if err := c.Bind(company); err != nil {
+		return c.JSON(http.StatusBadRequest, "Invalid input data")
+	}
+
+	company.ID = companyID
+
+	// Call the use case to handle the update logic
+	updatedCompany, err := s.companyUC.UpdateCompany(c.Request().Context(), company)
+	if err != nil {
+		if err == common.ErrCompanyNotFound {
+			return c.JSON(http.StatusNotFound, "Company not found")
+		}
+		return c.JSON(http.StatusInternalServerError, common.ErrorMsg{Message: err.Error()})
+	}
+
+	return c.JSON(http.StatusOK, updatedCompany)
 }
 
 func (s *Server) DeleteCompany(c echo.Context) error {
 	id := c.Param("id")
-
-	company, err := s.companyUC.GetCompanyByID(c.Request().Context(), id)
+	companyID, err := uuid.Parse(id)
 	if err != nil {
-		return c.JSON(http.StatusNotFound, "Company not found")
+		return c.JSON(http.StatusBadRequest, "Invalid company ID")
 	}
 
-	return c.JSON(http.StatusOK, company)
+	// Call the use case to handle the deletion logic
+	err = s.companyUC.DeleteCompany(c.Request().Context(), companyID)
+	if err != nil {
+		if err == common.ErrCompanyNotFound {
+			return c.JSON(http.StatusNotFound, "Company not found")
+		}
+		return c.JSON(http.StatusInternalServerError, "Failed to delete company")
+	}
+
+	return c.NoContent(http.StatusNoContent) // Return 204 No Content if successful
 }

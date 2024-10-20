@@ -26,11 +26,11 @@ func (db *CompanyDB) CreateCompany(ctx context.Context, company *entity.Company)
 }
 
 func (db *CompanyDB) UpdateCompany(ctx context.Context, company *entity.Company) error {
-	return nil
+	return db.Db.WithContext(ctx).Save(company).Error
 }
 
 func (db *CompanyDB) DeleteCompany(ctx context.Context, id string) error {
-	return nil
+	return db.Db.WithContext(ctx).Delete(&entity.Company{}, "id = ?", id).Error
 }
 
 func (db *CompanyDB) GetCompanyByID(ctx context.Context, id string) (*entity.Company, error) {
