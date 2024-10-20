@@ -51,7 +51,7 @@ sudo docker-compose up -d
 This command will:
 
 - Start PostgreSQL.
-  Run the Golang service (xm) which handles the company-related operations. Server is exposed in port 8090
+  Run the Golang service (xm) which handles the company-related operations. Server is exposed in port 8090. It will also run kafka and zookeeper 
 
 ## API Endpoints
 
@@ -125,7 +125,7 @@ Returns a company by id
 
 ```bash
 curl --location 'localhost:8090/v1/companies' \
---header 'Authorization: Bearer <JWT Token>' \
+--header 'Authorization: <JWT Token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "TechCorp",
@@ -159,7 +159,7 @@ curl --location --request PUT 'localhost:8090/v1/companies/eff3cf3d-9959-40b8-96
 - Method: PUT
 - Endpoint: /v1/companies/{id}
 
-Updates the information of an company
+Updates the information of a company
 
 ### 5. Delete a Company
 
