@@ -126,7 +126,6 @@ curl --location 'localhost:8090/v1/companies' \
 --header 'Authorization: Bearer <JWT Token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "id": "599c4b1f-8901-4d3c-bf87-795bc82b6f64",
     "name": "TechCorp",
     "description": "A leading tech company specializing in software development and cloud solutions.",
     "num_employees": 4,
@@ -147,7 +146,6 @@ curl --location --request PUT 'localhost:8090/v1/companies/eff3cf3d-9959-40b8-96
 --header 'Authorization: <JWT Token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "id": "599c4b1f-8901-4d3c-bf87-795bc82b6f64",
     "name": "TechCorp",
     "description": "A leading tech company",
     "num_employees": 4,
