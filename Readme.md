@@ -39,6 +39,7 @@ db_config:
   slow_query_threshold: 10
 
 jwt_secret_key: "a3dcb4d229de6fde0db5686dee47145d2d4f3f4b8e1a7f5c5b22d6a9f6142f37"
+kafka_broker: "kafka:9092"
 ```
 
 ## Run Docker Compose
