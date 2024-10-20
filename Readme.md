@@ -51,7 +51,7 @@ sudo docker-compose up -d
 This command will:
 
 - Start PostgreSQL.
-  Run the Golang service (xm) which handles the company-related operations. Server is exposed in port 8090. It will also run kafka and zookeeper 
+  Run the Golang service (xm) which handles the company-related operations. Server is exposed in port 8090. It will also run postgres, kafka and zookeeper 
 
 ## API Endpoints
 
