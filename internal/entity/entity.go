@@ -17,3 +17,11 @@ type Company struct {
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 }
+
+type LoginReq struct {
+	Email string `json:"email"`
+}
+
+type LoginResponse struct {
+	Token string `json:"token"`
+}

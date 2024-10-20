@@ -7,7 +7,8 @@ func GetAppConfig() *Config {
 }
 
 type Config struct {
-	DbConfig DbConfig `yaml:"db_config"`
+	DbConfig     DbConfig `yaml:"db_config"`
+	JWTSecretKey string   `yaml:"jwt_secret_key"`
 }
 
 type DbConfig struct {

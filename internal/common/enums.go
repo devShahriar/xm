@@ -1,5 +1,7 @@
 package common
 
+import "github.com/golang-jwt/jwt/v5"
+
 var validTypes = map[string]bool{
 	"Corporations":        true,
 	"NonProfit":           true,
@@ -9,4 +11,10 @@ var validTypes = map[string]bool{
 
 func GetValidCompanyTypes() map[string]bool {
 	return validTypes
+}
+
+type JwtPayload struct {
+	Email         string          `json:"email,omitempty"`
+	PermissionMap map[string]bool `json:"permissions"`
+	jwt.RegisteredClaims
 }
