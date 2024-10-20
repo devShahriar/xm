@@ -2,7 +2,7 @@ package http
 
 import (
 	"github.com/devShahriar/xm/internal/usecase"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 type Server struct {

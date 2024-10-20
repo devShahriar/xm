@@ -172,3 +172,12 @@ curl --location --request DELETE 'localhost:8090/v1/companies/e7b42c20-cb00-43f4
 - Endpoint: /v1/companies/{id}
 
 Deletes a company by id
+
+### Run Integration test
+
+Make sure db is up and running
+
+```
+cd internal/test
+go test --count=1 -v ./integration_test.go
+```
