@@ -2,8 +2,12 @@ package db
 
 import (
 	"context"
+	"fmt"
+
+	"gorm.io/driver/postgres"
 
 	"github.com/devShahriar/xm/internal/common"
+	"github.com/devShahriar/xm/internal/config"
 	"github.com/devShahriar/xm/internal/entity"
 	"github.com/devShahriar/xm/internal/repository"
 	"gorm.io/gorm"
@@ -16,9 +20,34 @@ type CompanyDB struct {
 }
 
 func (d *CompanyDB) RunMigrations() {
+
 	d.Db.AutoMigrate(
 		entity.Company{},
 	)
+}
+
+func CreateDBIfNotExists() error {
+	conf := config.GetAppConfig()
+	dsn := fmt.Sprintf("host=%s user=%s password=%s port=%s sslmode=disable",
+		conf.DbConfig.Host,
+		conf.DbConfig.User,
+		conf.DbConfig.Password,
+		conf.DbConfig.Port,
+	)
+	dbName := config.GetAppConfig().DbConfig.DbName
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return fmt.Errorf("error connecting to PostgreSQL server: %v", err)
+	}
+
+	err = db.Exec(fmt.Sprintf("CREATE DATABASE %s", dbName)).Error
+	if err != nil {
+		return fmt.Errorf("error creating database: %v", err)
+	}
+
+	fmt.Printf("Database '%s' is ready.\n", dbName)
+	return nil
 }
 
 func (db *CompanyDB) CreateCompany(ctx context.Context, company *entity.Company) error {

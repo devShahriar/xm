@@ -18,6 +18,8 @@ var server = &cobra.Command{
 
 		config := config.GetCmdConfig()
 		config.ReadConfig()
+		//Create Database if doesn't exist
+		db.CreateDBIfNotExists()
 
 		dbInstance := db.NewDBInstance()
 		dbInstance.RunMigrations()

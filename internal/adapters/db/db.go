@@ -6,7 +6,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/devShahriar/xm/internal/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -16,7 +15,6 @@ import (
 func NewDBInstance() *CompanyDB {
 
 	conf := config.GetAppConfig()
-	spew.Dump(conf)
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		conf.DbConfig.Host,
 		conf.DbConfig.User,

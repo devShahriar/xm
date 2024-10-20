@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  xm-service:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      CONFIG_PATH: "/app/config.yaml" # Set the path to your config file as an environment variable
+    volumes:
+      - ./config.yaml:/app/config.yaml # Mount your local config file into the container
+      # - ./wait-for-it.sh:/app/wait-for-it.sh # Add the wait-for-it script
+    ports:
+      - "8090:8090" # Expose the port to the host
+    depends_on:
+      - db # xm-service depends on the db service
+    command: sh -c "./wait-for-it.sh db:5432 -- ./xm server" # Wait for the db service to be ready before starting
+
+  db:
+    container_name: xm-db-pg
+    image: postgis/postgis:14-3.3-alpine
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - 5433:5432
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
