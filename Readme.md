@@ -17,7 +17,7 @@ This project is a microservice built with Golang that handles company operations
 
 ```bash
 git clone https://github.com/yourusername/xm-broker-service.git
-cd xm-broker-service
+cd xm
 ```
 
 # Setup environment
