@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/devShahriar/xm/internal/adapters/kafka"
 	"github.com/devShahriar/xm/internal/common"
 	"github.com/devShahriar/xm/internal/config"
 	"github.com/devShahriar/xm/internal/entity"
@@ -41,6 +42,9 @@ func (s *Server) CreateCompany(c echo.Context) error {
 		log.Errorf("error while creating company %v", err)
 		return c.JSON(http.StatusInternalServerError, common.ErrorMsg{Message: err.Error()})
 	}
+	go func() {
+		kafka.PublishEvent(fmt.Sprintf("Company created successfully %v", company.ID), common.TopicCreateCompany)
+	}()
 
 	return c.JSON(http.StatusCreated, company)
 }
@@ -69,6 +73,10 @@ func (s *Server) UpdateCompany(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, common.ErrorMsg{Message: err.Error()})
 	}
 
+	go func() {
+		kafka.PublishEvent(fmt.Sprintf("Company updated successfully %v", company.ID), common.TopicUpdateCompany)
+	}()
+
 	return c.JSON(http.StatusOK, updatedCompany)
 }
 
@@ -88,6 +96,9 @@ func (s *Server) DeleteCompany(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "Failed to delete company")
 	}
 
+	go func() {
+		kafka.PublishEvent(fmt.Sprintf("Company deleted successfully %v", companyID), common.TopicDeleteCompany)
+	}()
 	return c.NoContent(http.StatusNoContent) // Return 204 No Content if successful
 }
 

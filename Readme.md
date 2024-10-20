@@ -9,6 +9,7 @@ This project is a microservice built with Golang that handles company operations
 - Docker Compose
 - PostgreSQL
 - Kafka (optional for bonus)
+  [For publishing events you need create kafka topics command are given at end]
 
 ## Installation
 
@@ -178,4 +179,24 @@ Make sure db is up and running
 ```
 cd internal/test
 go test --count=1 -v ./integration_test.go
+```
+
+## Kafka event publish
+
+For each mutation create, update , delete an event will be fired to kafka broker
+
+### Kafka topic creation
+
+topics
+
+- createCompany
+- updateCompany
+- deleteCompany
+
+```
+docker exec -it xm-kafka-1 kafka-topics.sh --create --topic createCompany --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3
+
+docker exec -it xm-kafka-1 kafka-topics.sh --create --topic updateCompany --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3
+
+docker exec -it xm-kafka-1 kafka-topics.sh --create --topic deleteCompany --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3
 ```

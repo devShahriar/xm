@@ -2,6 +2,12 @@ package common
 
 import "github.com/golang-jwt/jwt/v5"
 
+const (
+	TopicCreateCompany = "createCompany"
+	TopicUpdateCompany = "updateCompany"
+	TopicDeleteCompany = "deleteCompany"
+)
+
 var validTypes = map[string]bool{
 	"Corporations":        true,
 	"NonProfit":           true,

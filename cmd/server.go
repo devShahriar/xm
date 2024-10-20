@@ -16,8 +16,8 @@ var server = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 
-		config := config.GetCmdConfig()
-		config.ReadConfig()
+		conf := config.GetCmdConfig()
+		conf.ReadConfig()
 		//Create Database if doesn't exist
 		db.CreateDBIfNotExists()
 
